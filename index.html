@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Blush by Suje — Makeup Artist</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --accent:#ff6fa3;
+      --accent-2:#ffb2d6;
+      --bg-1: #0f1724;
+      --max-width:1220px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family:'Poppins',system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;}
+
+    /* page layout */
+    .page{min-height:100%;background:linear-gradient(180deg,#0b1020 0%, #0f1724 60%);color:#fff;}
+    header{position:fixed;left:0;right:0;top:0;z-index:60;backdrop-filter: blur(6px);}
+    .nav{max-width:var(--max-width);margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:14px 24px}
+    .brand{display:flex;gap:12px;align-items:center}
+    .logo{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:flex;align-items:center;justify-content:center;font-weight:700;color:#1b1020}
+    nav a{color:rgba(255,255,255,0.9);text-decoration:none;margin-left:18px;font-weight:500}
+    .cta{background:transparent;border:1px solid rgba(255,255,255,0.12);padding:8px 14px;border-radius:10px}
+
+    /* HERO */
+    .hero{position:relative;padding-top:100px;min-height:72vh;display:flex;align-items:center}
+    .container{max-width:var(--max-width);margin:0 auto;padding:48px;display:flex;gap:40px;align-items:center}
+    .hero-left{flex:1;z-index:40}
+    .eyebrow{font-weight:600;color:rgba(255,255,255,0.85);letter-spacing:1px}
+    h1{font-size:48px;margin:12px 0 10px;line-height:1.02}
+    p.lead{opacity:0.9;max-width:70%;margin-bottom:18px}
+    .buttons{display:flex;gap:12px}
+    .btn{padding:12px 18px;border-radius:12px;border:0;font-weight:600;cursor:pointer}
+    .btn-primary{background:linear-gradient(90deg,var(--accent),#ff8fb1);color:#1b1020}
+    .btn-ghost{background:transparent;border:1px solid rgba(255,255,255,0.12);color:#fff}
+
+    .hero-right{flex:0 0 420px;position:relative;z-index:45}
+    .profile-card{background:linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02));border-radius:18px;padding:18px;backdrop-filter: blur(6px);display:flex;flex-direction:column;align-items:center}
+    .profile-photo{width:320px;height:320px;border-radius:20px;overflow:hidden;display:inline-block}
+    .profile-photo img{width:100%;height:100%;object-fit:cover;display:block}
+    .info{margin-top:12px;text-align:center}
+
+    /* gooey blobs (liquid drops) */
+    .goo-wrap{position:absolute;inset:0;pointer-events:none;z-index:30;overflow:hidden}
+    .blobs{position:absolute;left:0;top:0;width:140%;height:120%;transform:translateX(-10%)}
+    .blob{position:absolute;border-radius:50%;filter:blur(18px) saturate(120%);mix-blend-mode:screen;opacity:0.95}
+    .blob.one{width:340px;height:340px;background:radial-gradient(circle at 30% 30%,var(--accent) 0%, transparent 60%);left:-40px;top:20%;animation:move1 9s ease-in-out infinite}
+    .blob.two{width:260px;height:260px;background:radial-gradient(circle at 60% 40%,#ff9acb 0%, transparent 60%);left:180px;top:30%;animation:move2 11s ease-in-out infinite}
+    .blob.three{width:420px;height:420px;background:radial-gradient(circle at 40% 50%,#ffb8d9 0%, transparent 60%);left:60%;top:5%;animation:move3 13s ease-in-out infinite}
+
+    /* apply svg goo filter via CSS using filter: url(#goo) on parent */
+    .goo-wrap svg{position:absolute;width:0;height:0}
+    .goo-area{position:absolute;inset:0;filter:url(#goo);}
+
+    @keyframes move1{0%{transform:translateY(0) translateX(0) scale(1)}25%{transform:translateY(20px) translateX(8%) scale(1.05)}50%{transform:translateY(-10px) translateX(22%) scale(0.95)}75%{transform:translateY(25px) translateX(8%) scale(1.02)}100%{transform:translateY(0) translateX(0) scale(1)}}
+    @keyframes move2{0%{transform:translateY(0) translateX(0) scale(1)}25%{transform:translateY(-20px) translateX(-6%) scale(0.98)}50%{transform:translateY(10px) translateX(-22%) scale(1.03)}75%{transform:translateY(-18px) translateX(-8%) scale(1.01)}100%{transform:translateY(0) translateX(0) scale(1)}}
+    @keyframes move3{0%{transform:translateY(0) translateX(0) scale(1)}30%{transform:translateY(18px) translateX(-6%) scale(0.98)}60%{transform:translateY(-20px) translateX(-18%) scale(1.03)}100%{transform:translateY(0) translateX(0) scale(1)}}
+
+    /* services & portfolio */
+    .section{max-width:var(--max-width);margin:0 auto;padding:80px 24px}
+    .services{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
+    .service{background:rgba(255,255,255,0.03);padding:18px;border-radius:12px}
+    .portfolio{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+    .portfolio img{width:100%;height:180px;border-radius:10px;object-fit:cover}
+
+    /* contact */
+    .contact-form{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .input,textarea{width:100%;padding:12px;border-radius:8px;border:1px solid rgba(255,255,255,0.08);background:transparent;color:#fff}
+    textarea{min-height:140px;resize:vertical}
+
+    footer{padding:30px 24px;background:linear-gradient(180deg,transparent,rgba(0,0,0,0.35));color:rgba(255,255,255,0.75)}
+
+    /* responsive */
+    @media (max-width:900px){
+      .container{flex-direction:column;align-items:flex-start;padding:28px}
+      .hero-right{width:100%;flex:unset}
+      h1{font-size:36px}
+      .profile-photo{width:100%;height:320px}
+      .lead{max-width:100%}
+      .contact-form{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div class="nav">
+        <div class="brand">
+          <div class="logo">B</div>
+          <div>
+            <div style="font-weight:700">Blush by Suje</div>
+            <div style="font-size:12px;color:rgba(255,255,255,0.6)">Makeup Artist & Bridal Specialist</div>
+          </div>
+        </div>
+        <nav>
+          <a href="#about">About</a>
+          <a href="#services">Services</a>
+          <a href="#portfolio">Portfolio</a>
+          <a href="#contact" class="cta">Contact</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <!-- SVG filter for gooey effect -->
+        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" style="position:absolute;width:0;height:0;">
+          <defs>
+            <filter id="goo">
+              <feGaussianBlur in="SourceGraphic" stdDeviation="18" result="blur" />
+              <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 28 -7" result="goo" />
+              <feBlend in="SourceGraphic" in2="goo" />
+            </filter>
+          </defs>
+        </svg>
+
+        <div class="goo-wrap">
+          <div class="goo-area">
+            <div class="blobs">
+              <div class="blob one"></div>
+              <div class="blob two"></div>
+              <div class="blob three"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="container">
+          <div class="hero-left">
+            <div class="eyebrow">Premium Bridal & Event Makeup</div>
+            <h1>Blush by Suje<br><span style="font-weight:400;opacity:0.95">Soft. Glamorous. You.</span></h1>
+            <p class="lead">I create makeup looks that enhance your natural beauty — bridal, photoshoots, events, and editorial. Tailored to your skin, style, and vision.</p>
+            <div class="buttons">
+              <button class="btn btn-primary">Book a Trial</button>
+              <button class="btn btn-ghost">View Portfolio</button>
+            </div>
+            <div style="margin-top:20px;color:rgba(255,255,255,0.7);font-size:14px">Based in Kathmandu • Travel for shoots & weddings</div>
+          </div>
+
+          <aside class="hero-right">
+            <div class="profile-card">
+              <div class="profile-photo">
+                <img src="https://scontent.cdninstagram.com/v/t51.82787-15/539288692_18475843201079808_5238828830409921637_n.jpg?stp=dst-jpg_e35_tt6&_nc_cat=101&ig_cache_key=MzcwODM4OTk1NDkwNzU3NDI3Nw==.3-ccb1-7&ccb=1-7&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6InhwaWRzLjE0NDB4MTgwMC5zZHIuQzMifQ==&_nc_ohc=funLDDY7ojkQ7kNvwF3dW0s&_nc_oc=AdmRTVEK3-AcB1-19f6liwQA16hfSkPLqaNd_eXVjdJM4SuyXW8OmdKEm_MrSe_E5fXMo8T500ID7ew2t8h2p6UY&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent.cdninstagram.com&_nc_gid=pRGs-z5R2bryNkYjXNr3vw&oh=00_AfhMulfQhBBdrC8nTyBqk_bEXwvOEulTV3jekVns9Um8mw&oe=690E2D4E" alt="Suje profile">
+              </div>
+              <div class="info">
+                <div style="font-weight:700">Sujena Shrestha</div>
+                <div style="font-size:13px;color:rgba(255,255,255,0.7)">Professional Makeup Artist</div>
+                <div style="margin-top:8px;font-size:13px;color:rgba(255,255,255,0.75)">Specialist in natural bridal looks & editorial glam</div>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section id="about" class="section" style="padding-top:10px">
+        <h2 style="margin-top:0">About Suje</h2>
+        <p style="max-width:900px;opacity:0.95">Hi — I'm Suje, a professional makeup artist with 7+ years of experience helping brides and models feel confident in front of the camera. I use high-quality products, hygienic techniques, and a personalized approach so every look lasts through photos, tears, and celebrations.</p>
+      </section>
+
+      <section id="services" class="section">
+        <h2>Services</h2>
+        <div class="services">
+          <div class="service">
+            <h3>Bridal Makeup</h3>
+            <p>Full bridal look: trial, wedding day, and touch-ups. Packages available for travel.</p>
+          </div>
+          <div class="service">
+            <h3>Photoshoot & Editorial</h3>
+            <p>Makeup designed for photography — flawless finish and camera-ready skin.</p>
+          </div>
+          <div class="service">
+            <h3>Party & Events</h3>
+            <p>Glam, soft or dramatic — I tailor the look for the occasion.</p>
+          </div>
+          <div class="service">
+            <h3>Lessons & Consultations</h3>
+            <p>One-on-one lessons to learn everyday makeup or special occasion looks.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="portfolio" class="section">
+        <h2>Portfolio</h2>
+        <div class="portfolio">
+          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1400&auto=format&fit=crop&crop=faces" alt="portfolio">
+          <img src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?q=80&w=1400&auto=format&fit=crop&crop=faces" alt="portfolio">
+          <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=1400&auto=format&fit=crop&crop=faces" alt="portfolio">
+          <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=1400&auto=format&fit=crop&crop=faces" alt="portfolio">
+        </div>
+      </section>
+
+      <section id="contact" class="section">
+        <h2>Book & Contact</h2>
+        <form class="contact-form" onsubmit="event.preventDefault(); alert('Thanks! I\'ll get back to you soon.');">
+          <input class="input" placeholder="Your name" required>
+          <input class="input" placeholder="Phone or Email" required>
+          <input class="input" placeholder="Event or service (e.g. Bridal)" required>
+          <input class="input" placeholder="Preferred date (optional)">
+          <textarea placeholder="Tell me about your look or questions"></textarea>
+          <div style="display:flex;align-items:center;gap:8px">
+            <button class="btn btn-primary" type="submit">Send Message</button>
+            <a href="#" style="color:rgba(255,255,255,0.85);text-decoration:none;font-weight:600">Or WhatsApp</a>
+          </div>
+        </form>
+      </section>
+    </main>
+
+    <footer>
+      <div style="max-width:var(--max-width);margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:12px">
+        <div>
+          <div style="font-weight:700">Blush by Suje</div>
+          <div style="font-size:13px;color:rgba(255,255,255,0.7)">Kathmandu, Nepal • Available for travel</div>
+        </div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.75)">© <span id="year"></span> Suje Shrestha</div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    const goo = document.querySelector('.blobs');
+    if(goo){
+      let mouseX = 0, mouseY = 0;
+      let currentX = 0, currentY = 0;
+
+      window.addEventListener('mousemove', e => {
+        const w = window.innerWidth;
+        const h = window.innerHeight;
+        mouseX = (e.clientX - w/2)/w * 40;
+        mouseY = (e.clientY - h/2)/h * 40;
+      });
+
+      function animate(){
+        // easing for smooth motion
+        currentX += (mouseX - currentX) * 0.1;
+        currentY += (mouseY - currentY) * 0.1;
+        goo.style.transform = `translate(${currentX}px, ${currentY}px) translateX(-10%)`;
+        requestAnimationFrame(animate);
+      }
+      animate();
+    }
+  </script>
+</body>
+</html>
