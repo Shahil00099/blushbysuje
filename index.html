@@ -20,19 +20,57 @@
     /* page layout */
     .page{min-height:100%;background:linear-gradient(180deg,#0b1020 0%, #0f1724 60%);color:#fff;}
     header{position:fixed;left:0;right:0;top:0;z-index:60;backdrop-filter: blur(6px);}
-    
-    /* navbar fix */
-    .nav{max-width:var(--max-width);margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:14px 24px;flex-wrap:nowrap}
+    .nav{max-width:var(--max-width);margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:14px 24px;flex-wrap:wrap}
     .brand{display:flex;gap:12px;align-items:center}
     .logo{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:flex;align-items:center;justify-content:center;font-weight:700;color:#1b1020}
-    nav{display:flex;flex-wrap:nowrap;align-items:center;gap:18px}
-    nav a{color:rgba(255,255,255,0.9);text-decoration:none;font-weight:500}
+    
+    /* Nav Link Styles */
+    nav{display:flex;flex-wrap:wrap;align-items:center;gap:12px; transition: all 0.3s ease-out;}
+    nav a{color:rgba(255,255,255,0.9);text-decoration:none;margin-left:0;font-weight:500}
     .cta{background:transparent;border:1px solid rgba(255,255,255,0.12);padding:8px 14px;border-radius:10px}
+
+    /* --- RESPONSIVE NAVBAR ADDITIONS (START) --- */
+    
+    /* Hamburger Menu Button Styles */
+    .menu-btn {
+      display: none; /* Hidden by default on desktop */
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 10px 0;
+      width: 30px;
+      height: 30px;
+      position: relative;
+      z-index: 70;
+    }
+    .icon-bar {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: #fff;
+      border-radius: 1px;
+      margin: 5px 0;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+
+    /* Menu Open State Styles */
+    .menu-btn.open .icon-bar:nth-child(1) {
+      transform: rotate(-45deg) translate(-5px, 6px);
+    }
+    .menu-btn.open .icon-bar:nth-child(2) {
+      opacity: 0;
+    }
+    .menu-btn.open .icon-bar:nth-child(3) {
+      transform: rotate(45deg) translate(-5px, -6px);
+    }
+
+    /* --- RESPONSIVE NAVBAR ADDITIONS (END) --- */
+
 
     /* HERO */
     .hero{position:relative;padding-top:100px;min-height:72vh;display:flex;align-items:center;justify-content:center}
     .container{max-width:var(--max-width);margin:0 auto;padding:48px;display:flex;gap:40px;align-items:center;flex-wrap:wrap;justify-content:center}
-    .hero-left{flex:1;z-index:40;min-width:280px;text-align:left}
+    .hero-left{flex:1;z-index:40;min-width:280px}
     .eyebrow{font-weight:600;color:rgba(255,255,255,0.85);letter-spacing:1px}
     h1{font-size:48px;margin:12px 0 10px;line-height:1.02}
     p.lead{opacity:0.9;max-width:70%;margin-bottom:18px}
@@ -89,9 +127,56 @@
       p.lead{max-width:100%}
       .contact-form{grid-template-columns:1fr}
     }
+
+    /* Mobile Navigation Breakpoint */
+    @media (max-width: 768px) { 
+      .menu-btn {
+        display: block; /* Show the button on mobile */
+        margin-left: auto;
+      }
+      .nav {
+        flex-wrap: nowrap; /* Keep brand and button on one line */
+        align-items: center;
+      }
+      nav {
+        position: absolute;
+        top: 100%; /* Position below the header */
+        left: 0;
+        right: 0;
+        background: var(--bg-1); /* Use your background color */
+        flex-direction: column;
+        align-items: center;
+        padding: 0; /* Remove padding when closed */
+        height: 0; /* Initially hidden */
+        overflow: hidden;
+        pointer-events: none;
+        opacity: 0;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      }
+      nav.open {
+        height: auto;
+        max-height: 400px; /* Max-height for smooth transition */
+        overflow: visible;
+        pointer-events: auto;
+        opacity: 1;
+        padding: 20px 0; /* Add padding back when open */
+      }
+      nav a {
+        width: 100%;
+        text-align: center;
+        padding: 10px 0;
+      }
+    }
+
     @media (max-width:500px){
-      header .nav{flex-direction:column;align-items:center;gap:12px;padding:12px}
-      nav{flex-direction:column;gap:8px;width:100%;text-align:center}
+      header .nav{
+        /* Ensure the brand and toggle button are on one row */
+        flex-direction:row;
+        justify-content:space-between;
+        align-items:center;
+        padding:12px 24px;
+        flex-wrap: nowrap;
+      }
       .buttons{flex-direction:column;gap:8px}
       h1{font-size:28px}
       .profile-card{padding:12px}
@@ -111,7 +196,14 @@
             <div style="font-size:12px;color:rgba(255,255,255,0.6)">Makeup Artist & Bridal Specialist</div>
           </div>
         </div>
-        <nav>
+
+        <button class="menu-btn" id="menu-toggle" aria-expanded="false" aria-controls="nav-links">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+
+        <nav id="nav-links">
           <a href="#about">About</a>
           <a href="#services">Services</a>
           <a href="#portfolio">Portfolio</a>
@@ -121,9 +213,105 @@
     </header>
 
     <main>
-      <!-- HERO, About, Services, Portfolio, Contact (unchanged) -->
-      <!-- keep your original hero, services, portfolio, contact, footer HTML here -->
-      ... your existing content ...
+      <section class="hero">
+        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" style="position:absolute;width:0;height:0;">
+          <defs>
+            <filter id="goo">
+              <feGaussianBlur in="SourceGraphic" stdDeviation="18" result="blur" />
+              <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 28 -7" result="goo" />
+              <feBlend in="SourceGraphic" in2="goo" />
+            </filter>
+          </defs>
+        </svg>
+
+        <div class="goo-wrap">
+          <div class="goo-area">
+            <div class="blobs">
+              <div class="blob one"></div>
+              <div class="blob two"></div>
+              <div class="blob three"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="container">
+          <div class="hero-left">
+            <div class="eyebrow">Premium Bridal & Event Makeup</div>
+            <h1>Blush by Suje<br><span style="font-weight:400;opacity:0.95">Soft. Glamorous. You.</span></h1>
+            <p class="lead">I create makeup looks that enhance your natural beauty — bridal, photoshoots, events, and editorial. Tailored to your skin, style, and vision.</p>
+            <div class="buttons">
+              <button class="btn btn-primary">Book a Trial</button>
+              <button class="btn btn-ghost">View Portfolio</button>
+            </div>
+            <div style="margin-top:20px;color:rgba(255,255,255,0.7);font-size:14px">Based in Kathmandu • Travel for shoots & weddings</div>
+          </div>
+
+          <aside class="hero-right">
+            <div class="profile-card">
+              <div class="profile-photo">
+                <img src="images/suje.png" alt="Suje profile">
+              </div>
+              <div class="info">
+                <div style="font-weight:700">Sujena Shrestha</div>
+                <div style="font-size:13px;color:rgba(255,255,255,0.7)">Professional Makeup Artist</div>
+                <div style="margin-top:8px;font-size:13px;color:rgba(255,255,255,0.75)">Specialist in natural bridal looks & editorial glam</div>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section id="about" class="section" style="padding-top:10px">
+        <h2 style="margin-top:0">About Sujena Shrestha</h2>
+        <p style="max-width:900px;opacity:0.95">Hi — I'm Sujena Shrestha, a professional makeup artist with 7+ years of experience helping brides and models feel confident in front of the camera. I use high-quality products, hygienic techniques, and a personalized approach so every look lasts through photos, tears, and celebrations.</p>
+      </section>
+
+      <section id="services" class="section">
+        <h2>Services</h2>
+        <div class="services">
+          <div class="service">
+            <h3>Bridal Makeup</h3>
+            <p>Full bridal look: trial, wedding day, and touch-ups. Packages available for travel.</p>
+          </div>
+          <div class="service">
+            <h3>Photoshoot & Editorial</h3>
+            <p>Makeup designed for photography — flawless finish and camera-ready skin.</p>
+          </div>
+          <div class="service">
+            <h3>Party & Events</h3>
+            <p>Glam, soft or dramatic — I tailor the look for the occasion.</p>
+          </div>
+          <div class="service">
+            <h3>Lessons & Consultations</h3>
+            <p>One-on-one lessons to learn everyday makeup or special occasion looks.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="portfolio" class="section">
+        <h2>Portfolio</h2>
+        <div class="portfolio">
+          <img src="images/I.jpg" alt="portfolio">
+          <img src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?q=80&w=1400&auto=format&fit=crop&crop=faces" alt="portfolio">
+          <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=1400&auto=format&fit=crop&crop=faces" alt="portfolio">
+          <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=1400&auto=format&fit=crop&crop=faces" alt="portfolio">
+        </div>
+      </section>
+
+      <section id="contact" class="section">
+        <h2>Book & Contact</h2>
+        <form class="contact-form" onsubmit="event.preventDefault(); alert('Thanks! I\'ll get back to you soon.');">
+          <input class="input" placeholder="Your name" required>
+          <input class="input" placeholder="Phone or Email" required>
+          <input class="input" placeholder="Event or service (e.g. Bridal)" required>
+          <input class="input" placeholder="Preferred date (optional)">
+          <textarea placeholder="Tell me about your look or questions"></textarea>
+          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+            <button class="btn btn-primary" type="submit">Send Message</button>
+            <a href="#" style="color:rgba(255,255,255,0.85);text-decoration:none;font-weight:600">Or WhatsApp</a>
+          </div>
+        </form>
+      </section>
     </main>
 
     <footer>
@@ -140,6 +328,31 @@
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
+    // --- NAVBAR JAVASCRIPT ---
+    const menuToggle = document.getElementById('menu-toggle');
+    const navLinks = document.getElementById('nav-links');
+
+    menuToggle.addEventListener('click', () => {
+      // Toggle the 'open' class on the button and navigation
+      menuToggle.classList.toggle('open');
+      navLinks.classList.toggle('open');
+      // Toggle ARIA attributes for accessibility
+      const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true' || false;
+      menuToggle.setAttribute('aria-expanded', !isExpanded);
+    });
+
+    // Close the menu when a link is clicked (for single-page navigation)
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        if (navLinks.classList.contains('open')) {
+          menuToggle.classList.remove('open');
+          navLinks.classList.remove('open');
+          menuToggle.setAttribute('aria-expanded', 'false');
+        }
+      });
+    });
+
+    // --- EXISTING GOOEY BLOB JAVASCRIPT ---
     const goo = document.querySelector('.blobs');
     if(goo){
       let mouseX = 0, mouseY = 0;
